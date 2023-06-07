@@ -1,0 +1,20 @@
+digraph bintree {
+    
+    node [shape = record]
+    edge [arrowhead = vee, arrowtail = dot, tailclip = true ]
+    A [color = green, label = "<left> L | <data> 1 | <right> R"]
+    B [label = "<left> L | <data> 2 | <right> R"] 
+    C [label = "<left> L | <data> 3 | <right> R"]
+    D [label = "<left> L | <data> 4 | <right> R"]   
+    E [label = "<left> L | <data> 5 | <right> R"]
+    F [label = "<left> L | <data> 6 | <right> R"]
+    G [color = red, label = "<left> L | <data> 7 | <right> R"]
+    
+    A:left->B:data
+    A:right->C:data
+    B:left->D:data
+    B:right->E:data
+    C:left->F:data
+    C:right->G:data
+    
+}
