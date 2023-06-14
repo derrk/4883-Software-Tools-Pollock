@@ -1,17 +1,3 @@
-"""
-// Structure of Each Family Nucleus
-_____________________________________
-"A": {
-    "id": 1,
-    "surname": "Smith",
-    "maidenName": null,
-    "married": true,
-    "hasChildren": true,
-    "husband": null,
-    "wife": null,
-    "children": [2, 3, 4, 5, 6]
-  },
-"""
 import json
 
 def generate_family_tree(data):
@@ -22,27 +8,30 @@ def generate_family_tree(data):
 
     root = None
     for key, value in nodes.items():
-        parent = value['parent']
-        if parent is None:
+        parent = str(value.get('parent', ''))
+        if parent == '':
             root = key
-        else:
+        elif parent in nodes:
             nodes[parent]['children'].append(key)
 
     dot_code = 'digraph FamilyTree {\n'
     dot_code += '  node [shape=box];\n'
-
+# generate dot code function
     def generate_dot_code(node):
-        dot_code = f'  {node} [label="{node}"];\n'
+        dot_code = f'  "{node}" [label="{node}"];\n'
         for child in nodes[node]['children']:
             dot_code += generate_dot_code(child)
-            dot_code += f'  {node} -> {child};\n'
+            dot_code += f'  "{node}" -> "{child}";\n'
         return dot_code
 
-    dot_code += generate_dot_code(root)
+    for key in nodes.keys():
+        if key not in nodes[root]['children']:
+            dot_code += generate_dot_code(key)
+
     dot_code += '}'
 
     return dot_code
-
+# Write dot file as family_tree.dot
 def save_dot_file(dot_code):
     with open('family_tree.dot', 'w') as file:
         file.write(dot_code)
