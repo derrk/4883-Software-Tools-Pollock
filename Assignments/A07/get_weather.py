@@ -67,7 +67,7 @@ if __name__=='__main__':
     # print the parsed HTML
     tablemaker = print(history.prettify())
 
-    f = open(".Assignments/A07/table1.html", "w")
+    f = open("table1.html", "w")
     f.write(history.prettify())
     f.close
 

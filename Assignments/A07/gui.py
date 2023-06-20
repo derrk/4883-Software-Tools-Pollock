@@ -45,14 +45,18 @@ def buildWeatherURL(month=None, day=None, year=None, airport=None, filter=None):
         day = current_day
     if not year:
         year = current_year
+
+    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+              'October', 'November', 'December']
+    choices = ['Daily', 'Weekly','Monthly']
     
     # Create the gui's layout using text boxes that allow for user input without checking for valid input
     layout = [
-        [sg.Text('Month')],[sg.InputText(month)],
+        [sg.Text('Month')],[sg.Combo(months, readonly = True)],
         [sg.Text('Day')],[sg.InputText(day)],
         [sg.Text('Year')],[sg.InputText(year)],
         [sg.Text('Code')],[sg.InputText()],
-        [sg.Text('Daily / Weekly / Monthly')],[sg.InputText()],
+        [sg.Text('Daily / Weekly / Monthly')],[sg.Combo(choices, readonly = True)],
         [sg.Submit(), sg.Cancel()]
     ]      
 
@@ -65,7 +69,7 @@ def buildWeatherURL(month=None, day=None, year=None, airport=None, filter=None):
     day = values[1]
     year = values[2]
     code = values[3]
-    filter = [4]
+    filter = values[4]
 
     sg.popup('You entered', f"Month: {month}, Day: {day}, Year: {year}, Code: {code}, Filter: {filter}")
 
