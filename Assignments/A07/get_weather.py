@@ -43,6 +43,15 @@ def asyncGetWeather(url):
     
 if __name__=='__main__':
 
+    # Could be a good idea to use the buildWeatherURL from gui.py
+    # url = 'http://www.wunderground.com/history/daily/KCHO/date/2020-12-31'
+
+    # get the page source HTML from the URL
+    # page = asyncGetWeather(url)
+
+    # parse the html
+    # soup = BeautifulSoup(page, 'html.parser')
+
     # Could be a good idea to use the buildWeatherURL function from gui.py
     url = 'http://www.wunderground.com/history/daily/KCHO/date/2020-12-31'
 
@@ -56,7 +65,11 @@ if __name__=='__main__':
     history = soup.find('lib-city-history-observation')
 
     # print the parsed HTML
-    print(history.prettify())
+    tablemaker = print(history.prettify())
+
+    f = open(".Assignments/A07/table1.html", "w")
+    f.write(history.prettify())
+    f.close
 
 
 
