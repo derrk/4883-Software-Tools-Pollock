@@ -5,6 +5,9 @@ The program then prints the parsed HTML to the console.
 """
 
 import time                                             # needed for the sleep function
+import rich
+from gui import *
+from rich import print
 
 from bs4 import BeautifulSoup                           # used to parse the HTML
 from selenium import webdriver                          # used to render the web page
@@ -31,7 +34,7 @@ def asyncGetWeather(url):
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
         
-        driver = webdriver.Chrome(service=service,options=options)  # run ChromeDriver
+        driver = webdriver.Chrome()  # run ChromeDriver
         flushprint("Getting page...")
         driver.get(url)                                             # load the web page from the URL
         flushprint("waiting 3 seconds for dynamic data to load...")
@@ -53,7 +56,8 @@ if __name__=='__main__':
     # soup = BeautifulSoup(page, 'html.parser')
 
     # Could be a good idea to use the buildWeatherURL function from gui.py
-    url = 'http://www.wunderground.com/history/daily/KCHO/date/2020-12-31'
+    # url = 'http://www.wunderground.com/history/daily/KCHO/date/2020-12-31'
+    url = buildWeatherURL()
 
     # get the page source HTML from the URL
     page = asyncGetWeather(url)
@@ -70,6 +74,35 @@ if __name__=='__main__':
     f = open("table1.html", "w")
     f.write(history.prettify())
     f.close
+
+    with open('table1.html') as f:
+          table = f.read()
+          soup = BeautifulSoup(table, 'html.parser')
+
+    # print(soup.prettify())
+    # print(soup.text)
+    rows = soup.find_all('tr')
+    head = soup.find_all('th')
+
+    allData = []
+
+    keys = []
+    for d in head:
+          key = d.text.strip().replace(' ', '').replace('\n', '')
+        #   print(key)
+          keys.append(key)
+    for row in rows:
+          row = row.find_all('td')
+          data = []
+          for td in row:
+                # print(soup.text.strip().replace(' ', '').replace('\n', ''))
+                # print('========================')
+                data.append(td.text.strip().replace(' ', '').replace('\n', ''))
+                # print(data)
+          dictionary = dict(zip(keys, data))
+        #   print(dictionary)
+          allData.append(dictionary)
+    print(allData)
 
 
 
