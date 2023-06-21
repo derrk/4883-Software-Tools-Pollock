@@ -103,7 +103,9 @@ if __name__=='__main__':
         #   print(dictionary)
           allData.append(dictionary)
     print(allData)
-
+    outfile = open('/Users/derrks/Desktop/Random Projects/4883-Software-Tools-Pollock/Assignments/A07/parsed.json', 'w')
+    outfile.write(str(allData))
+    outfile.close
 
 
 
