@@ -46,11 +46,14 @@ def buildWeatherURL(month=None, day=None, year=None, airport=None, filter=None):
     if not year:
         year = current_year
 
-    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-              'October', 'November', 'December']
+    # months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+    #           'October', 'November', 'December']
+    months = ['1', '2', '3', '4', '5', '6', '7', '8', '9',
+              '10', '11', '12']
     choices = ['Daily', 'Weekly','Monthly']
     
     # Create the gui's layout using text boxes that allow for user input without checking for valid input
+    # Need to have months return as an index int value
     layout = [
         [sg.Text('Month')],[sg.Combo(months, readonly = True)],
         [sg.Text('Day')],[sg.InputText(day)],
@@ -65,7 +68,8 @@ def buildWeatherURL(month=None, day=None, year=None, airport=None, filter=None):
     event, values = window.read()
     window.close()
         
-    month = values[0]
+        
+    month = int(values[0])
     day = values[1]
     year = values[2]
     code = values[3]
@@ -74,6 +78,9 @@ def buildWeatherURL(month=None, day=None, year=None, airport=None, filter=None):
     sg.popup('You entered', f"Month: {month}, Day: {day}, Year: {year}, Code: {code}, Filter: {filter}")
 
     # return the URL to pass to wunderground to get appropriate weather data
+    builtUrl = 'http://www.wunderground.com/history/daily/{}/date/{}-{}-{}'.format(code, year, month, day)
+    print(builtUrl)
+    return builtUrl
 
 if __name__=='__main__':
     buildWeatherURL()
