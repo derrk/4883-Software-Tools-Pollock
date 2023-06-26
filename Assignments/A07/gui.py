@@ -8,7 +8,10 @@ TODO:
     - The year drop down box should have the values ??-2023.
     - The filter drop down box should have the values 'daily', 'weekly', 'monthly'.
 """
-import PySimpleGUI as sg      
+import PySimpleGUI as sg 
+import pandas as pd
+import random     
+import json
 
 def currentDate(returnType='tuple'):
     """ Get the current date and return it as a tuple, list, or dictionary.
@@ -82,5 +85,40 @@ def buildWeatherURL(month=None, day=None, year=None, airport=None, filter=None):
     print(builtUrl)
     return builtUrl
 
+def tableGUI(month=None, day=None, year=None, airport=None, filter=None):
+    max_rows = 10
+    max_cols = 5
+
+    with open('parsed.json', 'r') as infile:
+        data = json.load(infile)
+
+    table_data = []
+    for item in data:
+        row = [item.get('Time'), item.get('Temperature'), item.get('Humidity'), item.get('Wind'), item.get('WindSpeed'), item.get('Condition')]
+        table_data.append(row)
+    table_headings = ['Time', 'Temperature','Humidity', 'Wind', 'Wind Speed', 'Condition']
+
+    layout = [
+        [sg.Text('Airport: ')],
+        [sg.Text('Date: ')],
+        [sg.Table(values=table_data, headings = table_headings,
+                  justification = 'center',
+                  auto_size_columns= True,
+                  display_row_numbers = True,
+                  col_widths =[10, 10, 15], alternating_row_color='lightgreen')],
+                  [sg.Button('Exit')]
+    ]
+    #create window
+    window = sg.Window('Weather', layout)
+
+    while True:
+        event, values = window.read()
+        if event == sg.WINDOW_CLOSED or event == 'Exit':
+            break
+    
+    window.close()
+
+
 if __name__=='__main__':
     buildWeatherURL()
+    #tableGUI()

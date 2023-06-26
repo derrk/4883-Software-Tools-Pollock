@@ -8,6 +8,7 @@ import time                                             # needed for the sleep f
 import rich
 from gui import *
 from rich import print
+import json
 
 from bs4 import BeautifulSoup                           # used to parse the HTML
 from selenium import webdriver                          # used to render the web page
@@ -103,9 +104,12 @@ if __name__=='__main__':
         #   print(dictionary)
           allData.append(dictionary)
     print(allData)
-    outfile = open('/Users/derrks/Desktop/Random Projects/4883-Software-Tools-Pollock/Assignments/A07/parsed.json', 'w')
-    outfile.write(str(allData))
-    outfile.close
+
+    with open('parsed.json', 'w') as outfile:
+          json.dump(allData, outfile)
+    # outfile = open('/Users/derrks/Desktop/Random Projects/4883-Software-Tools-Pollock/Assignments/A07/parsed.json', 'w')
+    # outfile.write(str(allData))
+    # outfile.close
 
 
 
