@@ -1,0 +1,20 @@
+digraph FamilyTree {
+    rankdir=LR;
+    node [shape=box];
+
+    // Node definitions
+    {% for person in data.values() %}
+    {{ person.id }} [
+        label="{{
+            person.id }}: {{
+            person.surname }}{% if person.maidenName %} ({{ person.maidenName }}){% endif %}"
+    ];
+    {% endfor %}
+
+    // Edge definitions
+    {% for person in data.values() %}
+    {% if person.parent %}
+    {{ person.parent }} -> {{ person.id }};
+    {% endif %}
+    {% endfor %}
+}
