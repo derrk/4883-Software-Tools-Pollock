@@ -11,3 +11,7 @@ A function buildweather_gui will then run and generate a table populated with th
 |:-: | ------- | ----------------- |
 | 01 | [airport codes](airport-codes.csv)| Airport codes needed for entering location code |
 | 02 | [get_weather](get_weather.py) | Main file that will call the necessary files |
+| 03 | [parsed data](https://github.com/derrk/4883-Software-Tools-Pollock/blob/main/parsed.json) | Data from weather site formatted in json |
+| 04 | [gui](gui.py) | File containing the functions that build the gui |
+| 05 | [weather gui](getweather_gui.png) | Window for user to enter parameters |
+| 06 | [output](output_table.png) | Output example from given weather parameters |
